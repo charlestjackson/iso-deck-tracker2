@@ -1,0 +1,10 @@
+<template name="preconDetail">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3>{{name}} ({{set}}) {{#unless userHasDeck}}<button type="button" class="btn btn-primary set-deck">Set as my deck</button> {{/unless}}</h3>
+		</div>
+		<div class="panel-body">
+			{{>deckDetail}}
+		</div>
+	</div>
+</template>

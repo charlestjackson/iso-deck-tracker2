@@ -1,0 +1,15 @@
+<template name="cardRow">
+	
+	<p class="card-row">
+		<span class="card-amount">{{amount}}</span> 
+		<span class="card-name"><a href="{{cardLink}}" target="_blank">{{name}}</a></span> 
+		<span class="card-cost">({{formatMoney(cost)}})</span>
+		{{#if editMode}}
+			<span class="actions">
+				<button type="button" class="btn btn-xs btn-default add">+</button>
+				<button type="button" class="btn btn-xs btn-default subtract">-</button>
+			</span>
+		{{/if}}
+	</p>
+	
+</template>

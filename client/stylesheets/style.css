@@ -1,0 +1,29 @@
+.deck-block {
+	padding: 10px;
+}
+
+.card-block {
+	padding-bottom: 10px;
+	float: left;
+	clear: left;
+	width: 100%;
+}
+
+.left-block {
+	float: left;
+}
+
+.right-block {
+	float: left;
+}
+
+.card-row {
+	font-size: 12px;
+	padding: 2px;
+	margin: 2px;
+	width: 100%;
+}
+
+.card-row .actions {
+	text-align: right;
+}

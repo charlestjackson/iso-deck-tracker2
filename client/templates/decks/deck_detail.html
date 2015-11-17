@@ -1,0 +1,56 @@
+<template name="deckDetail">
+	
+	<div class="deck-block left-block">
+		<div class="card-block ">
+			<h4>Creatures ({{cardCount(creatures)}})</h4>
+			{{#each creatures}}
+				{{>cardRow}}
+			{{/each}}
+		</div>
+
+		<div class="card-block">
+			<h4>Instants({{cardCount(instants)}})</h4>
+			{{#each instants}}
+				{{>cardRow}}
+			{{/each}}
+		</div>		
+		
+		<div class="card-block">
+			<h4>Sorceries ({{cardCount(sorceries)}})</h4>
+			{{#each sorceries}}
+				{{>cardRow}}
+			{{/each}}
+		</div>		
+		
+	</div>
+	<div class="deck-block right-block">
+		<div class="card-block">
+			<h4>Enchantments ({{cardCount(enchantments)}})</h4>
+			{{#each enchantments}}
+				{{>cardRow}}
+			{{/each}}
+		</div>
+		
+		<div class="card-block">
+			<h4>Artifacts ({{cardCount(artifacts)}})</h4>
+			{{#each artifacts}}
+				{{>cardRow}}
+			{{/each}}
+		</div>
+	
+		<div class="card-block">
+			<h4>Planeswalkers ({{cardCount(planeswalkers)}})</h4>
+			{{#each planeswalkers}}
+				{{>cardRow}}
+			{{/each}}
+		</div>
+	
+		<div class="card-block">
+			<h4>Lands ({{cardCount(land)}})</h4>
+			{{#each land}}
+				{{>cardRow}}
+			{{/each}}
+		</div>
+	</div>
+		
+</template>
