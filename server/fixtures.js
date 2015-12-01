@@ -28,7 +28,7 @@ if (Precons.find().count() === 0) {
 		name: "Wade into Battle",
 		set: 'Commander 2015'
 	});
-	
+
 	Cards.insert({ deckId: 'Swell_the_Host', amount: 1, name: "Ezuri, Claw of Progress", type: CREATURE_TYPE, cost: 0.0 });
 	Cards.insert({ deckId: 'Swell_the_Host', amount: 1, name: 'Skullwinder', type: CREATURE_TYPE, cost: 0.0 });
 	Cards.insert({ deckId: 'Swell_the_Host', amount: 1, name: 'Kaseto, Orochi Archmage', type: CREATURE_TYPE, cost: 0.0 });
@@ -458,3 +458,10 @@ if (Precons.find().count() === 0) {
 	Cards.insert({ deckId: 'Wade_into_Battle', amount: 14, name: 'Mountain', type: LAND_TYPE, cost: 0.0 });
 	Cards.insert({ deckId: 'Wade_into_Battle', amount: 11, name: 'Plains', type: LAND_TYPE, cost: 0.0 });
 }
+
+Decks.find().forEach(function(deck) {
+	if (!deck.emailAddress && deck.userId) {
+		var user = Meteor.users.findOne(deck.userId);
+		Decks.update({ _id: deck._id }, { $set: { emailAddress: user.emails[0].address }});
+	}
+});

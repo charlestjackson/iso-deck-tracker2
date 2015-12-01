@@ -1,0 +1,23 @@
+<template name="allDecks">
+	
+	<div class="all-decks">
+		<div class="wrapper">	
+			<table class="table table-striped">		
+				<thead>
+					<tr>
+						<td>User</td>
+						<td>&nbsp;</td>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each allDecks}}
+						<tr>
+							<td><a href="{{pathFor 'userDeckDetail'}}">{{emailAddress}}</a></td>
+						</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+</template>

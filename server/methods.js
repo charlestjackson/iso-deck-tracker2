@@ -2,9 +2,11 @@ Meteor.methods({
 	
 	copyDeck: function(preconId, userId) {
 		var precon = Precons.findOne({ _id : preconId});
+		var user = Meteor.users.findOne(userId);
 		
 		var deck = {
-			userId: userId
+			userId: userId,
+			emailAddress: user.emails[0].address
 		};
 		
 		var newId = Decks.insert(deck);
