@@ -1,3 +1,6 @@
+body {
+	font-family: 'Roboto', sans-serif;
+}
 .deck-block {
 	padding: 10px;
 }
@@ -6,23 +9,20 @@
 	padding-bottom: 10px;
 	float: left;
 	clear: left;
-	width: 100%;
+	width: 102%;
 }
-
-.left-block {
-	float: left;
-}
-
-.right-block {
+.left-block, .right-block {
+	width: 354px;
 	float: left;
 }
 
 .card-row {
-	font-size: 12px;
-	padding: 2px;
+	font-size: 14px;
+	padding: 4px 0;
 	margin: 2px;
 	width: 100%;
 	line-height: 1.5;
+	height: 27px;
 }
 
 .card-row .actions {
