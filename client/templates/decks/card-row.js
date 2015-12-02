@@ -8,7 +8,7 @@ Template.cardRow.helpers({
 	}
 });
 
-Template.deckDetail.events({ 
+Template.cardRow.events({ 
 	'click .actions .add' : function(e) {
 		Cards.update({ _id: this._id }, { $inc : { amount: 1 }});
 	},

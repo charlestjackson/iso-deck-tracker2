@@ -1,3 +1,7 @@
+Template.myDeck.rendered = function() {
+  Meteor.typeahead.inject();
+};
+
 Template.myDeck.helpers({ 
 	myDeck: function() {
 		var currentId = Meteor.users.findOne()._id;
@@ -11,6 +15,24 @@ Template.myDeck.helpers({
 	
 	availableCards: function() {
 		return Cards.find({ deckId: this._id, amount: { $lte : 0 } }, { sort: { 'name' : 1 }});
+	},
+	
+	cardCount: function() {
+		var num = _.reduce(Cards.find({ deckId : this._id }).fetch(), function(memo, card) { return memo + card.amount }, 0);
+		return num;
+	},
+	
+	cardAuto: function(query, sync, callback) {
+		$.get('https://api.deckbrew.com/mtg/cards/typeahead?q=' + query, function(data) {
+			var names = _.map(data, function(it) { return { value: it.name, type: it.types[0] }; });
+			callback(names);
+		})
+	},
+	
+	cardSelected: function(event, card) {
+		console.log(card);
+		var type = card.type.substring(0, 1).toUpperCase() + card.type.substring(1);
+		$("#newCardType").val(type);
 	}
 });
 
@@ -22,9 +44,32 @@ Template.myDeck.events({
 	'submit form' : function(e) {
 		e.preventDefault();
 		
-		var name = $(e.target).find('#newCardName').val();
-		var cost = parseFloat($(e.target).find('#newCardCost').val());
-		var type = $(e.target).find('#newCardType').val();
+		var nameInp = $(e.target).find('#newCardName'); 
+		var name = nameInp.val();
+		if (!name) {
+			nameInp.parent().addClass('has-error');
+			return;
+		} else {
+			nameInp.parent().removeClass('has-error');
+		}
+		
+		var costInp = $(e.target).find('#newCardCost');
+		var cost = parseFloat(costInp.val());
+		if (!cost) {
+			costInp.parent().addClass('has-error');
+			return;
+		} else {
+			costInp.parent().removeClass('has-error');
+		}
+		
+		var typeInp = $(e.target).find('#newCardType');
+		var type = typeInp.val();
+		if (!type) {
+			typeInp.parent().addClass('has-error');
+			return;
+		} else {
+			typeInp.parent().removeClass('has-error');
+		}
 		
 		var card = {
 			deckId: this._id,
