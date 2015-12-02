@@ -8,6 +8,14 @@ Template.cardRow.helpers({
 	}
 });
 
+var saveFunc = function(id, name, cost) {
+	cost = parseFloat(cost.replace('$', ''));
+
+	Cards.update({ _id: id }, { $set: { name: name, cost: cost }});
+
+	Session.set('edit-card-' + id, false);
+}
+
 Template.cardRow.events({ 
 	'click .actions .add' : function(e) {
 		Cards.update({ _id: this._id }, { $inc : { amount: 1 }});
@@ -45,10 +53,16 @@ Template.cardRow.events({
 		var name = block.find('[name="card-name"]').val();
 		var cost = block.find('[name="card-cost"]').val();
 		
-		cost = parseFloat(cost.replace('$', ''));
+		saveFunc(this._id, name, cost);
+	},
+	
+	'keypress [name="card-name"], keypress [name="card-cost"]' : function(e) {
+		if (e.keyCode == 13) {
+			var block = $(e.target).parent().parent().parent();
+			var name = block.find('[name="card-name"]').val();
+			var cost = block.find('[name="card-cost"]').val();
 		
-		Cards.update({ _id: this._id }, { $set: { name: name, cost: cost }});
-		
-		Session.set('edit-card-' + this._id, false);
+			saveFunc(this._id, name, cost);
+		}
 	}
 });
