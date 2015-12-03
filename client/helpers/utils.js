@@ -3,11 +3,11 @@ Template.registerHelper('formatMoney', function(n) {
 });
 
 Template.registerHelper('hasUser', function() {
-	return Meteor.users.find().count() > 0;
+	return Meteor.user != null;
 });
 
 Template.registerHelper('userHasDeck', function() {
-	return Decks.find({ "userId" : user()._id }).count() > 0;
+	return Decks.find({ "userId" : Meteor.userId() }).count() > 0;
 });
 
 Template.registerHelper('cardLink', function() {

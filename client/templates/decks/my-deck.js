@@ -1,5 +1,5 @@
 Template.myDeck.rendered = function() {
-  Meteor.typeahead.inject();
+	setTimeout(Meteor.typeahead.inject, 500);
 };
 
 Template.myDeck.helpers({ 
