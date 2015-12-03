@@ -1,24 +1,23 @@
-Template.myDeck.rendered = function() {
-	setTimeout(Meteor.typeahead.inject, 500);
+Template.deckList.rendered = function() {
+	//setTimeout(Meteor.typeahead.inject, 1000);
 };
 
-Template.myDeck.helpers({ 
-	myDeck: function() {
-		var currentId = Meteor.users.findOne()._id;
-		return Decks.findOne({ userId:  currentId });
+Template.deckList.helpers({ 
+	hasDeck: function() {
+		return this.deck != null;
 	},
 	
 	totalCost: function() {
-		var cost = _.reduce(Cards.find({ deckId : this._id }).fetch(), function(memo, card) { return memo + (card.cost * card.amount) }, 0);
+		var cost = _.reduce(Cards.find({ deckId : this.deck._id }).fetch(), function(memo, card) { return memo + (card.cost * card.amount) }, 0);
 		return formatMoney(cost);
 	},
 	
 	availableCards: function() {
-		return Cards.find({ deckId: this._id, amount: { $lte : 0 } }, { sort: { 'name' : 1 }});
+		return Cards.find({ deckId: this.deck._id, amount: { $lte : 0 } }, { sort: { 'name' : 1 }});
 	},
 	
 	cardCount: function() {
-		var num = _.reduce(Cards.find({ deckId : this._id }).fetch(), function(memo, card) { return memo + card.amount }, 0);
+		var num = _.reduce(Cards.find({ deckId : this.deck._id }).fetch(), function(memo, card) { return memo + card.amount }, 0);
 		return num;
 	},
 	
@@ -30,13 +29,12 @@ Template.myDeck.helpers({
 	},
 	
 	cardSelected: function(event, card) {
-		console.log(card);
 		var type = card.type.substring(0, 1).toUpperCase() + card.type.substring(1);
 		$("#newCardType").val(type);
 	}
 });
 
-Template.myDeck.events({
+Template.deckList.events({
 	'click .remove-deck' : function(e) {
 		Meteor.call('removeDeck', this._id);
 	},
@@ -72,7 +70,7 @@ Template.myDeck.events({
 		}
 		
 		var card = {
-			deckId: this._id,
+			deckId: this.deck._id,
 			name: name,
 			cost: cost,
 			type: type,
@@ -98,10 +96,10 @@ Template.myDeck.events({
 	},
 	
 	'click .available-cards .actions .add' : function(e) {
-		Cards.update({ _id: this._id }, { $inc : { amount: 1 }});
+		Cards.update({ _id: this.deck._id }, { $inc : { amount: 1 }});
 	},
 	
 	'click .available-cards .actions .subtract' : function(e) {
-		Cards.update({ _id: this._id }, { $inc : { amount: -1 }});
+		Cards.update({ _id: this.deck._id }, { $inc : { amount: -1 }});
 	}
 })
