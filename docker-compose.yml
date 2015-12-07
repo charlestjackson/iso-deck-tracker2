@@ -1,0 +1,15 @@
+dashboard:
+  image: cjackson/iso-deck-tracker
+  ports:
+   - "80:3000"
+  links:
+   - mongo-dev:mongo-dev
+  environment:
+   - MONGO_URL=mongodb://mongo-dev/yourapp
+   - ROOT_URL=http://54.85.165.254
+   - DELAY=30
+   - PORT=3000
+mongo-dev:
+  image: dfmedia/meteor-mongo:latest
+  ports:
+   - "27017:27017"
